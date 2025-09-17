@@ -5,7 +5,11 @@ format: jb-book
 root: intro
 chapters:
 - file: pengantar
+- file: linkgraphscraping
 - file: crawlingdata
   sections:
   - file: crawlingberita
   - file: crawlingptatrunojoyo
+  - file: ptatrunojoyomanajemen
+- file: preprocessing
+

@@ -1,2 +1,2 @@
 # ppw
-Tugas PPW Static
+Tugas PPW Web Statik
