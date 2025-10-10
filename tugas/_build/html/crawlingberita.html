@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Crawling Berita CNN Indonesia &#8212; My sample book</title>
+    <title>Data Berita CNN Indonesia &#8212; My sample book</title>
   
   
   
@@ -183,14 +183,15 @@
 <li class="toctree-l1"><a class="reference internal" href="pengantar.html">Pengantar Pencarian dan Penambangan Web</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linkgraphscraping.html">Link Graph Scraping Teknik Industri</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="crawlingdata.html">Crawling</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Crawling Berita CNN Indonesia</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Data Berita CNN Indonesia</a></li>
+
 <li class="toctree-l2"><a class="reference internal" href="crawlingptatrunojoyo.html">Crawling PTA Trunojoyo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ptatrunojoyomanajemen.html">Crawling PTA Trunojoyo Prodi Manajemen</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocessing_abstrak_indonesia.html">Preprocessing Abstrak Bahasa Indonesia</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="preprocessing_berita.html">Preprocessing Berita CNN Indonesia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing_berita.html">Preprocessing Berita</a></li>
 
 </ul>
 
@@ -377,7 +378,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Crawling Berita CNN Indonesia</h1>
+    <h1>Data Berita CNN Indonesia</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -387,8 +388,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-untuk-ambil-kategori-berita-dan-fungsi-untuk-mengambil-data-berita-sebanyak-20-per-kategori">Fungsi untuk ambil kategori berita dan fungsi untuk mengambil data berita sebanyak 20 per kategori</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Berita CNN Indonesia</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-berita-pada-index-website-cnnindonesia">Ambil data berita pada index website CnnIndonesia</a></li>
 </ul>
+
             </nav>
         </div>
     </div>
@@ -399,8 +402,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="crawling-berita-cnn-indonesia">
-<h1>Crawling Berita CNN Indonesia<a class="headerlink" href="#crawling-berita-cnn-indonesia" title="Link to this heading">#</a></h1>
+  <section id="data-berita-cnn-indonesia">
+<h1>Data Berita CNN Indonesia<a class="headerlink" href="#data-berita-cnn-indonesia" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">builtwith</span>
@@ -427,8 +430,9 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="fungsi-untuk-ambil-kategori-berita-dan-fungsi-untuk-mengambil-data-berita-sebanyak-20-per-kategori">
-<h2>Fungsi untuk ambil kategori berita dan fungsi untuk mengambil data berita sebanyak 20 per kategori<a class="headerlink" href="#fungsi-untuk-ambil-kategori-berita-dan-fungsi-untuk-mengambil-data-berita-sebanyak-20-per-kategori" title="Link to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ambil-data-berita-pada-index-website-cnnindonesia">
+<h1>Ambil data berita pada index website CnnIndonesia<a class="headerlink" href="#ambil-data-berita-pada-index-website-cnnindonesia" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://www.cnnindonesia.com/&quot;</span>
@@ -447,53 +451,119 @@ document.write(`
                 <span class="n">categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slug</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">categories</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">scrape_category</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">category</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
-
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c1"># cari link berita di halaman kategori</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_links_from_category_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
     <span class="n">links</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;article a, .list-berita a, .headline a, .container__list__desc a&quot;</span><span class="p">):</span>
         <span class="n">href</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">href</span> <span class="ow">and</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">):</span>
-            <span class="n">links</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">href</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">href</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+            <span class="n">href</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">href</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="c1"># hanya link yang berada pada kategori yang sama</span>
+        <span class="k">if</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">):</span>
+            <span class="n">relative</span> <span class="o">=</span> <span class="n">href</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">relative</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">category</span><span class="p">:</span>
+                <span class="n">links</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">href</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">links</span><span class="p">)</span>
 
-    <span class="c1"># ambil maksimal `max_items`</span>
-    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">links</span><span class="p">)[:</span><span class="n">max_items</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_discover_index_base_for_category</span><span class="p">(</span><span class="n">category</span><span class="p">):</span>
+    <span class="c1"># coba temukan link &quot;Indeks&quot; resmi untuk kategori tsb</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+        <span class="c1"># cari tautan yang mengandung &quot;/indeks/&quot; dan masih dalam kategori yang sama</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">):</span>
+            <span class="n">href</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">href</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+                <span class="n">href</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">href</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">rel</span> <span class="o">=</span> <span class="n">href</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">rel</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">category</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;indeks&quot;</span><span class="p">:</span>
+                <span class="c1"># buang query jika ada, ambil base path saja</span>
+                <span class="n">base_no_query</span> <span class="o">=</span> <span class="n">href</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">base_no_query</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">scrape_category</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">seen_links</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="c1"># temukan base indeks untuk kategori, misal:</span>
+    <span class="c1"># https://www.cnnindonesia.com/internasional/indeks/6</span>
+    <span class="n">index_base</span> <span class="o">=</span> <span class="n">_discover_index_base_for_category</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">index_base</span><span class="p">:</span>
+        <span class="c1"># fallback pola umum apabila tidak ditemukan</span>
+        <span class="n">index_base</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}{</span><span class="n">category</span><span class="si">}</span><span class="s2">/indeks/6&quot;</span>
+
+    <span class="n">page_number</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">max_items</span> <span class="ow">and</span> <span class="n">page_number</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">index_base</span><span class="si">}</span><span class="s2">?page=</span><span class="si">{</span><span class="n">page_number</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">resp_detail</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-            <span class="n">soup_detail</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp_detail</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+            <span class="n">links</span> <span class="o">=</span> <span class="n">_extract_links_from_category_soup</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">links</span><span class="p">:</span>
+                <span class="c1"># jika halaman tidak berisi link yang valid, hentikan</span>
+                <span class="k">break</span>
 
-            <span class="c1"># judul</span>
-            <span class="n">judul_tag</span> <span class="o">=</span> <span class="n">soup_detail</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">)</span>
-            <span class="n">judul</span> <span class="o">=</span> <span class="n">judul_tag</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">judul_tag</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">seen_links</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">seen_links</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
 
-            <span class="c1"># kategori (pakai slug pertama di URL)</span>
-            <span class="n">kategori</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">path</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-                <span class="n">kategori</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="n">kategori</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">resp_detail</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">resp_detail</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">soup_detail</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp_detail</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
 
-            <span class="c1"># isi berita</span>
-            <span class="n">paragraf</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">soup_detail</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.detail-text p&quot;</span><span class="p">)]</span>
-            <span class="n">isi</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paragraf</span><span class="p">)</span>
+                    <span class="n">judul_tag</span> <span class="o">=</span> <span class="n">soup_detail</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">)</span>
+                    <span class="n">judul</span> <span class="o">=</span> <span class="n">judul_tag</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">judul_tag</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 
-            <span class="k">if</span> <span class="n">isi</span><span class="p">:</span>
-                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                    <span class="s2">&quot;judul&quot;</span><span class="p">:</span> <span class="n">judul</span><span class="p">,</span>
-                    <span class="s2">&quot;kategori&quot;</span><span class="p">:</span> <span class="n">kategori</span><span class="p">,</span>
-                    <span class="s2">&quot;isi&quot;</span><span class="p">:</span> <span class="n">isi</span><span class="p">,</span>
-                    <span class="s2">&quot;link&quot;</span><span class="p">:</span> <span class="n">link</span>
-                <span class="p">})</span>
+                    <span class="c1"># kategori dari URL</span>
+                    <span class="n">kategori</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">path</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                        <span class="n">kategori</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                        <span class="n">kategori</span> <span class="o">=</span> <span class="kc">None</span>
 
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+                    <span class="n">paragraf</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">soup_detail</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.detail-text p&quot;</span><span class="p">)]</span>
+                    <span class="n">isi</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paragraf</span><span class="p">)</span>
 
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gagal ambil </span><span class="si">{</span><span class="n">link</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">isi</span><span class="p">:</span>
+                        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                            <span class="s2">&quot;judul&quot;</span><span class="p">:</span> <span class="n">judul</span><span class="p">,</span>
+                            <span class="s2">&quot;kategori&quot;</span><span class="p">:</span> <span class="n">kategori</span><span class="p">,</span>
+                            <span class="s2">&quot;isi&quot;</span><span class="p">:</span> <span class="n">isi</span><span class="p">,</span>
+                            <span class="s2">&quot;link&quot;</span><span class="p">:</span> <span class="n">link</span>
+                        <span class="p">})</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">max_items</span><span class="p">:</span>
+                        <span class="k">break</span>
+
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gagal ambil </span><span class="si">{</span><span class="n">link</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">max_items</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="n">page_number</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.7</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">break</span>
+
     <span class="k">return</span> <span class="n">data</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -503,7 +573,7 @@ document.write(`
 
     <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scraping kategori </span><span class="si">{</span><span class="n">cat</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">scrape_category</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">scrape_category</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
         <span class="n">all_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  → </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span><span class="si">}</span><span class="s2"> berita diambil dari </span><span class="si">{</span><span class="n">cat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -521,32 +591,32 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kategori ditemukan: [&#39;nasional&#39;, &#39;internasional&#39;, &#39;ekonomi&#39;, &#39;olahraga&#39;, &#39;teknologi&#39;, &#39;otomotif&#39;, &#39;hiburan&#39;, &#39;gaya-hidup&#39;]
 Scraping kategori nasional ...
-  → 18 berita diambil dari nasional
+  → 200 berita diambil dari nasional
 Scraping kategori internasional ...
-  → 19 berita diambil dari internasional
+  → 200 berita diambil dari internasional
 Scraping kategori ekonomi ...
-  → 20 berita diambil dari ekonomi
+  → 200 berita diambil dari ekonomi
 Scraping kategori olahraga ...
-  → 20 berita diambil dari olahraga
+  → 200 berita diambil dari olahraga
 Scraping kategori teknologi ...
-  → 19 berita diambil dari teknologi
+  → 200 berita diambil dari teknologi
 Scraping kategori otomotif ...
-  → 19 berita diambil dari otomotif
+  → 200 berita diambil dari otomotif
 Scraping kategori hiburan ...
-  → 19 berita diambil dari hiburan
+  → 200 berita diambil dari hiburan
 Scraping kategori gaya-hidup ...
-  → 17 berita diambil dari gaya-hidup
-                                                                  judul  \
-0       Ada Putusan MK, TNI Masih Pertimbangkan Polisikan Ferry Irwandi   
-1                                Sara Keponakan Prabowo Mundur dari DPR   
-2                   Tanggul Beton Cilincing, DKI Sebut Perizinan di KKP   
-3          Pernyataan Lengkap Rahayu Saraswati Gerindra Mundur dari DPR   
-4                        Rahayu Saraswati Ungkap Alasan Mundur dari DPR   
-5            Gibran soal Reshuffle: Agar Mesin Pemerintah Lebih Optimal   
-6  TNI AL Pastikan Ingin Akuisisi Kapal Induk Italia Giuseppe Garibaldi   
-7                   Prabowo Berduka Banjir Terjang Wilayah Bali dan NTT   
-8       Polisi Jadwalkan Ulang Pemeriksaan Sherina soal Kucing Uya Kuya   
-9                       Helikopter Bawa Empat Penumpang Jatuh di Mimika   
+  → 200 berita diambil dari gaya-hidup
+                                                                    judul  \
+0       Dasco Beber Materi Rapat Bareng Menkeu Purbaya hingga Tito di DPR   
+1  Nikita Mirzani Dituntut 11 Tahun Penjara &amp; Denda Rp2 M Kasus Pemerasan   
+2        Fadli Zon Pugar Situs Gunung Padang: Ini Piramida Asli Indonesia   
+3               Tiga Purnawirawan TNI dan Polri Gabung Komite Otsus Papua   
+4      Ammar Zoni Diduga Jual Sabu hingga Ganja Sintetis di Rutan Salemba   
+5            Klaim Pengacara Silfester: Kasus Fitnah JK Sudah Kedaluwarsa   
+6   Geng Motor Serang Warkop Tanah Abang, Lepas Tembakan &amp; Gasak Rp2 Juta   
+7  Kasus Kegiatan Seni Fiktif, Eks Kadisbud DKI Dituntut 12 Tahun Penjara   
+8    Hal Memberatkan Tuntutan 11 Tahun Bui Nikita: Tak Hargai Persidangan   
+9   Polisi Tangguhkan Penahanan Figha Lesmana, Tersangka Penghasutan Demo   
 
    kategori  \
 0  nasional   
@@ -561,28 +631,28 @@ Scraping kategori gaya-hidup ...
 9  nasional   
 
                                                                                                    isi  \
-0  TNImasih mempertimbangkan langkah hukum yang akan diambil terhadap CEO Malaka ProjectFerry Irwan...   
-1  Politikus Partai GerindraRahayu Saraswati Djojohadikusumoalias Sara memutuskan mundur sebagai an...   
-2  Staf Khusus Gubernur DKI Jakarta Bidang Komunikasi Sosial Chico Hakim mengatakan perizinan terka...   
-3  Politikus Partai Gerindrayang juga keponakan Presiden Prabowo Subianto,Rahayu Saraswati Djojohad...   
-4  Keponakan Presiden Prabowo Subianto,Rahayu Saraswati Djojohadikusumomengungkap alasan dirinya mu...   
-5  Wakil Presiden RIGibran RakabumingRaka menyebut Presiden RI Prabowo Subianto telah memperhitungk...   
-6  TNI Angkatan Laut(AL) memastikan rencana mengakuisisi kapal induk atauaircraft carriermilik Ital...   
-7  Presiden RI Prabowo Subiantomenyampaikan duka cita atas bencanabanjiryang melanda sejumlah wilay...   
-8  Polres Metro Jakarta Timur kembali menjadwalkan ulang klarifikasi terhadap musisiSherina Munafun...   
-9  Helikopterdengan nomor registrasi PK-IWS milik PT Intan Angkasa sempat dilaporkan hilang kontak ...   
+0  Wakil Ketua DPRSufmi Dasco Ahmadmengungkap isi pertemuan tertutup dirinya dengan sejumlah menter...   
+1  Jaksa Penuntut Umum (JPU) menuntut majelis hakim Pengadilan Negeri (PN) Jakarta Selatan menghuku...   
+2  Menteri KebudayaanFadli Zonmembeberkan rencana restrukturisasi Situs Megalitikum Gunung Padang d...   
+3  Sebanyak tiga purnawirawan TNI/Polri bergabung dalamKomite Eksekutif Percepatan Pembangunan Oton...   
+4  AktorAmmar Zonikembali terlibat dalam kasus peredaran barang haramnarkotikasaat mendekam di Ruta...   
+5  Ketua Umum Relawan Solidaritas Merah PutihSilfester Matutinadisebut masih berada diJakarta. Komi...   
+6  Segerombolan orang bersenjata menyerang sebuah warung kopi (warkop) di Jalan Jati Baru Raya,Tana...   
+7  Jaksa Penuntut Umum (JPU) menuntut mantan Kepala Dinas Kebudayaan (Kadisbud) DKI Jakarta Iwan He...   
+8  Jaksa Penuntut Umum (JPU) mengungkapkan sejumlah hal memberatkan saat menjatuhkan tuntutan pidan...   
+9  Polda Metro Jaya menangguhkan penahananFigha Lesmana, pemilik akun TikTok @fighaaaaa sekaligus t...   
 
                                                                                                   link  
-0  https://www.cnnindonesia.com/nasional/20250910145755-12-1272165/ada-putusan-mk-tni-masih-pertimb...  
-1  https://www.cnnindonesia.com/nasional/20250910182921-32-1272266/sara-keponakan-prabowo-mundur-da...  
-2  https://www.cnnindonesia.com/nasional/20250910171358-20-1272247/tanggul-beton-cilincing-dki-sebu...  
-3  https://www.cnnindonesia.com/nasional/20250910190234-32-1272282/pernyataan-lengkap-rahayu-sarasw...  
-4  https://www.cnnindonesia.com/nasional/20250910185904-32-1272281/rahayu-saraswati-ungkap-alasan-m...  
-5  https://www.cnnindonesia.com/nasional/20250910163545-32-1272225/gibran-soal-reshuffle-agar-mesin...  
-6  https://www.cnnindonesia.com/nasional/20250910155754-20-1272200/tni-al-pastikan-ingin-akuisisi-k...  
-7  https://www.cnnindonesia.com/nasional/20250910180419-20-1272258/prabowo-berduka-banjir-terjang-w...  
-8  https://www.cnnindonesia.com/nasional/20250910175837-12-1272256/polisi-jadwalkan-ulang-pemeriksa...  
-9  https://www.cnnindonesia.com/nasional/20250910165536-20-1272233/helikopter-bawa-empat-penumpang-...  
+0  https://www.cnnindonesia.com/nasional/20251009134232-32-1282746/dasco-beber-materi-rapat-bareng-...  
+1  https://www.cnnindonesia.com/nasional/20251009130839-12-1282721/nikita-mirzani-dituntut-11-tahun...  
+2  https://www.cnnindonesia.com/nasional/20251009141905-20-1282769/fadli-zon-pugar-situs-gunung-pad...  
+3  https://www.cnnindonesia.com/nasional/20251009125814-20-1282722/tiga-purnawirawan-tni-dan-polri-...  
+4  https://www.cnnindonesia.com/nasional/20251009125445-12-1282717/ammar-zoni-diduga-jual-sabu-hing...  
+5  https://www.cnnindonesia.com/nasional/20251009140733-12-1282757/klaim-pengacara-silfester-kasus-...  
+6  https://www.cnnindonesia.com/nasional/20251009125235-12-1282713/geng-motor-serang-warkop-tanah-a...  
+7  https://www.cnnindonesia.com/nasional/20251009135533-12-1282754/kasus-kegiatan-seni-fiktif-eks-k...  
+8  https://www.cnnindonesia.com/nasional/20251009133126-12-1282732/hal-memberatkan-tuntutan-11-tahu...  
+9  https://www.cnnindonesia.com/nasional/20251009131729-12-1282727/polisi-tangguhkan-penahanan-figh...  
 Selesai, data disimpan ke berita_cnn.csv
 </pre></div>
 </div>
@@ -622,38 +692,38 @@ Selesai, data disimpan ke berita_cnn.csv
   <tbody>
     <tr>
       <th>0</th>
-      <td>Ada Putusan MK, TNI Masih Pertimbangkan Polisikan Ferry Irwandi</td>
+      <td>Dasco Beber Materi Rapat Bareng Menkeu Purbaya hingga Tito di DPR</td>
       <td>nasional</td>
-      <td>TNImasih mempertimbangkan langkah hukum yang akan diambil terhadap CEO Malaka ProjectFerry Irwan...</td>
-      <td>https://www.cnnindonesia.com/nasional/20250910145755-12-1272165/ada-putusan-mk-tni-masih-pertimb...</td>
+      <td>Wakil Ketua DPRSufmi Dasco Ahmadmengungkap isi pertemuan tertutup dirinya dengan sejumlah menter...</td>
+      <td>https://www.cnnindonesia.com/nasional/20251009134232-32-1282746/dasco-beber-materi-rapat-bareng-...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Sara Keponakan Prabowo Mundur dari DPR</td>
+      <td>Nikita Mirzani Dituntut 11 Tahun Penjara &amp; Denda Rp2 M Kasus Pemerasan</td>
       <td>nasional</td>
-      <td>Politikus Partai GerindraRahayu Saraswati Djojohadikusumoalias Sara memutuskan mundur sebagai an...</td>
-      <td>https://www.cnnindonesia.com/nasional/20250910182921-32-1272266/sara-keponakan-prabowo-mundur-da...</td>
+      <td>Jaksa Penuntut Umum (JPU) menuntut majelis hakim Pengadilan Negeri (PN) Jakarta Selatan menghuku...</td>
+      <td>https://www.cnnindonesia.com/nasional/20251009130839-12-1282721/nikita-mirzani-dituntut-11-tahun...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Tanggul Beton Cilincing, DKI Sebut Perizinan di KKP</td>
+      <td>Fadli Zon Pugar Situs Gunung Padang: Ini Piramida Asli Indonesia</td>
       <td>nasional</td>
-      <td>Staf Khusus Gubernur DKI Jakarta Bidang Komunikasi Sosial Chico Hakim mengatakan perizinan terka...</td>
-      <td>https://www.cnnindonesia.com/nasional/20250910171358-20-1272247/tanggul-beton-cilincing-dki-sebu...</td>
+      <td>Menteri KebudayaanFadli Zonmembeberkan rencana restrukturisasi Situs Megalitikum Gunung Padang d...</td>
+      <td>https://www.cnnindonesia.com/nasional/20251009141905-20-1282769/fadli-zon-pugar-situs-gunung-pad...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Pernyataan Lengkap Rahayu Saraswati Gerindra Mundur dari DPR</td>
+      <td>Tiga Purnawirawan TNI dan Polri Gabung Komite Otsus Papua</td>
       <td>nasional</td>
-      <td>Politikus Partai Gerindrayang juga keponakan Presiden Prabowo Subianto,Rahayu Saraswati Djojohad...</td>
-      <td>https://www.cnnindonesia.com/nasional/20250910190234-32-1272282/pernyataan-lengkap-rahayu-sarasw...</td>
+      <td>Sebanyak tiga purnawirawan TNI/Polri bergabung dalamKomite Eksekutif Percepatan Pembangunan Oton...</td>
+      <td>https://www.cnnindonesia.com/nasional/20251009125814-20-1282722/tiga-purnawirawan-tni-dan-polri-...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Rahayu Saraswati Ungkap Alasan Mundur dari DPR</td>
+      <td>Ammar Zoni Diduga Jual Sabu hingga Ganja Sintetis di Rutan Salemba</td>
       <td>nasional</td>
-      <td>Keponakan Presiden Prabowo Subianto,Rahayu Saraswati Djojohadikusumomengungkap alasan dirinya mu...</td>
-      <td>https://www.cnnindonesia.com/nasional/20250910185904-32-1272281/rahayu-saraswati-ungkap-alasan-m...</td>
+      <td>AktorAmmar Zonikembali terlibat dalam kasus peredaran barang haramnarkotikasaat mendekam di Ruta...</td>
+      <td>https://www.cnnindonesia.com/nasional/20251009125445-12-1282717/ammar-zoni-diduga-jual-sabu-hing...</td>
     </tr>
     <tr>
       <th>...</th>
@@ -663,46 +733,68 @@ Selesai, data disimpan ke berita_cnn.csv
       <td>...</td>
     </tr>
     <tr>
-      <th>146</th>
-      <td>DKI Evaluasi Cakupan Imunisasi Campak Hingga Tingkat RT, Ini Alasannya</td>
+      <th>1595</th>
+      <td>Minat Pindah ke Selandia Baru? Sekarang Syaratnya Lebih Mudah</td>
       <td>gaya-hidup</td>
-      <td>DKI evaluasi cakupanimunisasicampak hingga tingkat RT sebagai langkah serius menekan penyebaranp...</td>
-      <td>https://www.cnnindonesia.com/gaya-hidup/20250910100657-255-1272004/dki-evaluasi-cakupan-imunisas...</td>
+      <td>Selandia Barubaru saja mengumumkan bahwa negara ini melonggarkan persyaratan untuk mendapatkan i...</td>
+      <td>https://www.cnnindonesia.com/gaya-hidup/20250926205829-269-1278241/minat-pindah-ke-selandia-baru...</td>
     </tr>
     <tr>
-      <th>147</th>
-      <td>Apa yang Terjadi pada Tubuh Saat Stres Berlebihan?</td>
+      <th>1596</th>
+      <td>Cek, Begini Gejala Awal Munculnya Gagal Ginjal</td>
       <td>gaya-hidup</td>
-      <td>Situasi negara saat ini tak pelak bikinstres. Stres terus-menerus atau berlebihan tidak bisa dia...</td>
-      <td>https://www.cnnindonesia.com/gaya-hidup/20250903103057-255-1269571/apa-yang-terjadi-pada-tubuh-s...</td>
+      <td>Gagal ginjaltermasuk penyakit serius yang dapat memburuk seiring waktu. Sayangnya, banyak orang ...</td>
+      <td>https://www.cnnindonesia.com/gaya-hidup/20250923154400-255-1276860/cek-begini-gejala-awal-muncul...</td>
     </tr>
     <tr>
-      <th>148</th>
-      <td>5 Sayuran Ini Tak Dianjurkan untuk Penderita Asam Urat, Siapa Saja?</td>
+      <th>1597</th>
+      <td>Pertolongan Pertama saat Anak Alami Keracunan Makanan</td>
       <td>gaya-hidup</td>
-      <td>Banyak pakarkesehatanmenganjurkan konsumsisayurandemi kesehatan jangka panjang. Namun, ada beber...</td>
-      <td>https://www.cnnindonesia.com/gaya-hidup/20250829102742-255-1267731/5-sayuran-ini-tak-dianjurkan-...</td>
+      <td>Kasuskeracunanusai menyantap programmakan bergizi gratis(MBG) tengah menjadi sorotan publik bela...</td>
+      <td>https://www.cnnindonesia.com/gaya-hidup/20250926104108-255-1277922/pertolongan-pertama-saat-anak...</td>
     </tr>
     <tr>
-      <th>149</th>
-      <td>Marak Delay, Maskapai Ini Persilakan Penumpang 'Serbu' Email Menteri</td>
+      <th>1598</th>
+      <td>Cerita Samantha 'Tuangkan' Kanker Payudara dalam Karya Seni</td>
       <td>gaya-hidup</td>
-      <td>MaskapaiRyanair mengimbau para penumpang yang mengalami penundaan penerbangan akibat masalah pen...</td>
-      <td>https://www.cnnindonesia.com/gaya-hidup/20250908144448-269-1271253/marak-delay-maskapai-ini-pers...</td>
+      <td>Berkesenian jadi sarana para pejuangkankerpayudara untuk menuangkan apa yang dirasakan. Hal ini ...</td>
+      <td>https://www.cnnindonesia.com/gaya-hidup/20250926142218-255-1278045/cerita-samantha-tuangkan-kank...</td>
     </tr>
     <tr>
-      <th>150</th>
-      <td>Mengenal Gejala dan Penanganan Diabetes pada Anak Sejak Dini</td>
+      <th>1599</th>
+      <td>VIDEO: Cetak Rekor, Pria Polandia Panjat Everest Tanpa Oksigen Bantuan</td>
       <td>gaya-hidup</td>
-      <td>Mengenal gejala dan penanganandiabetespada anak penting dilakukan sejak dini. Penyakitkronisini ...</td>
-      <td>https://www.cnnindonesia.com/gaya-hidup/20250910152614-255-1272188/mengenal-gejala-dan-penangana...</td>
+      <td>Atlet ski Polandia, Andrzej Bargiel mencatat sejarah dengan mendaki dan turun dari gunung Everes...</td>
+      <td>https://www.cnnindonesia.com/gaya-hidup/20250926185027-274-1278205/video-cetak-rekor-pria-poland...</td>
     </tr>
   </tbody>
 </table>
-<p>151 rows × 4 columns</p>
+<p>1600 rows × 4 columns</p>
 </div></div></div>
 </div>
-</section>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="n">get_categories</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kategori ditemukan:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">cat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kategori ditemukan: 8
+1. nasional
+2. internasional
+3. ekonomi
+4. olahraga
+5. teknologi
+6. otomotif
+7. hiburan
+8. gaya-hidup
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -769,8 +861,10 @@ Selesai, data disimpan ke berita_cnn.csv
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-untuk-ambil-kategori-berita-dan-fungsi-untuk-mengambil-data-berita-sebanyak-20-per-kategori">Fungsi untuk ambil kategori berita dan fungsi untuk mengambil data berita sebanyak 20 per kategori</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Berita CNN Indonesia</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ambil-data-berita-pada-index-website-cnnindonesia">Ambil data berita pada index website CnnIndonesia</a></li>
 </ul>
+
   </nav></div>
 
 </div></div>
