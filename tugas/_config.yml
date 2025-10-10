@@ -31,3 +31,7 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+  theme:
+    options:
+      show_toc_level: 2
+      collapse_navigation: False
