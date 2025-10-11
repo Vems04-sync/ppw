@@ -12,11 +12,11 @@ chapters:
   - file: crawlingptatrunojoyo
   - file: ptatrunojoyomanajemen
 - file: preprocessing_abstrak_indonesia
-  sections:
-  - file: ekstraksi_fitur_tfidf_abstrak
-  - file: cbow_embeding_abstrak
+- file: ekstraksi_fitur_tfidf_abstrak
+- file: cbow_embeding_abstrak
+- file: klasifikasi_lda_abstrak
 - file: preprocessing_berita
-  sections:
-  - file: ekstraksi_fitur_tfidf_berita
-  - file: cbow_embeding_berita
+- file: ekstraksi_fitur_tfidf_berita
+- file: cbow_embeding_berita
+- file: klasifikasi_lda_berita
 
