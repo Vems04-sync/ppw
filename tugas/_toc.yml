@@ -11,27 +11,24 @@ chapters:
   - file: crawlingberita
   - file: crawlingptatrunojoyo
   - file: ptatrunojoyomanajemen
+
 - file: preprocessing_abstrak_indonesia
   title: Preprocessing Abstrak Indonesia
-
-- file: ekstraksi_fitur_tfidf_abstrak
-  title: Ekstraksi Fitur TF-IDF Abstrak
-
-- file: cbow_embeding_abstrak
-  title: CBOW Embedding Abstrak
-
-- file: klasifikasi_lda_abstrak
-  title: Klasifikasi LDA Abstrak
+  sections:
+    - file: ekstraksi_fitur_tfidf_abstrak
+      title: Ekstraksi Fitur TF-IDF Abstrak
+    - file: cbow_embeding_abstrak
+      title: CBOW Embedding Abstrak
+    - file: klasifikasi_lda_abstrak
+      title: Klasifikasi LDA Abstrak
 
 - file: preprocessing_berita
   title: Preprocessing Berita
-
-- file: ekstraksi_fitur_tfidf_berita
-  title: Ekstraksi Fitur TF-IDF Berita
-
-- file: cbow_embeding_berita
-  title: CBOW Embedding Berita
-
-- file: klasifikasi_lda_berita
-  title: Klasifikasi LDA Berita
+  sections:
+    - file: ekstraksi_fitur_tfidf_berita
+      title: Ekstraksi Fitur TF-IDF Berita
+    - file: cbow_embeding_berita
+      title: CBOW Embedding Berita
+    - file: klasifikasi_lda_berita
+      title: Klasifikasi LDA Berita
 
