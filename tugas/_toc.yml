@@ -20,9 +20,6 @@ chapters:
 - file: cbow_embeding_abstrak
   title: CBOW Embedding Abstrak
 
-- file: klasifikasi_lda_abstrak
-  title: Klasifikasi LDA Abstrak
-
 - file: preprocessing_berita
   title: Preprocessing Berita
 
