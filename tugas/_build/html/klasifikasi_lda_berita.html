@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Klasifikasi Berita dengan LDA (Latent Dirichlet Allocation) &#8212; My sample book</title>
+    <title>LDA Klasifikasi Berita &#8212; My sample book</title>
   
   
   
@@ -382,7 +382,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Klasifikasi Berita dengan LDA (Latent Dirichlet Allocation)</h1>
+    <h1>LDA Klasifikasi Berita</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -392,11 +392,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-1-setup-dan-pemuatan-data">FASE 1: Setup dan Pemuatan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-2-preprocessing-dan-penggabungan-kategori">FASE 2: Preprocessing dan Penggabungan Kategori</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-3-ekstraksi-fitur-lda-dan-pencarian-topik-optimal">FASE 3: Ekstraksi Fitur LDA dan Pencarian Topik Optimal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-4-pelatihan-dan-evaluasi-model-klasifikasi">FASE 4: Pelatihan dan Evaluasi Model Klasifikasi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-5-visualisasi-dengan-umap">FASE 5: Visualisasi dengan UMAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">SETUP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemuatan-data">PEMUATAN DATA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-lda-pencarian-topik-optimal">EKSTRAKSI FITUR LDA &amp; PENCARIAN TOPIK OPTIMAL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pelatihan-dan-evaluasi-model-klasifikasi">PELATIHAN DAN EVALUASI MODEL KLASIFIKASI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-lanjutan-dan-visualisasi-umap">ANALISIS LANJUTAN DAN VISUALISASI (UMAP)</a></li>
 </ul>
             </nav>
         </div>
@@ -408,51 +408,22 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="klasifikasi-berita-dengan-lda-latent-dirichlet-allocation">
-<h1>Klasifikasi Berita dengan LDA (Latent Dirichlet Allocation)<a class="headerlink" href="#klasifikasi-berita-dengan-lda-latent-dirichlet-allocation" title="Link to this heading">#</a></h1>
-<p><strong>Tujuan</strong>: Mengklasifikasikan berita berdasarkan kategori menggunakan fitur topik yang diekstrak dari LDA.</p>
-<p><strong>Alur Kerja</strong>:</p>
-<ol class="arabic simple">
-<li><p><strong>Setup &amp; Load Data</strong>: Import library dan baca dataset berita yang sudah dipreprocessing</p></li>
-<li><p><strong>Preprocessing</strong>: Gabungkan kategori serupa dan konversi hasil preprocessing ke format token</p></li>
-<li><p><strong>LDA &amp; Topic Modeling</strong>: Cari jumlah topik optimal dan ekstrak fitur distribusi topik</p></li>
-<li><p><strong>Klasifikasi</strong>: Latih model SVM untuk klasifikasi kategori berita</p></li>
-<li><p><strong>Visualisasi</strong>: Tampilkan hasil dalam bentuk scatter plot 2D menggunakan UMAP</p></li>
-</ol>
-<p><strong>Dataset</strong>: <code class="docutils literal notranslate"><span class="pre">hasil_preprocessing_berita.csv</span></code> dengan kolom:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">isi</span></code>: teks berita asli</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hasil_preprocessing</span></code>: token yang sudah dibersihkan</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">kategori</span></code>: label kategori berita</p></li>
-</ul>
-<section id="fase-1-setup-dan-pemuatan-data">
-<h2>FASE 1: Setup dan Pemuatan Data<a class="headerlink" href="#fase-1-setup-dan-pemuatan-data" title="Link to this heading">#</a></h2>
-<p><strong>Apa yang dilakukan</strong>:</p>
-<ul class="simple">
-<li><p>Import semua library yang diperlukan (pandas, gensim, sklearn, matplotlib, umap)</p></li>
-<li><p>Baca dataset dari file CSV yang sudah berisi hasil preprocessing</p></li>
-</ul>
-<p><strong>Mengapa penting</strong>:</p>
-<ul class="simple">
-<li><p>Library gensim untuk LDA dan topic modeling</p></li>
-<li><p>Library sklearn untuk klasifikasi dan evaluasi</p></li>
-<li><p>Dataset sudah dipreprocessing sehingga menghemat waktu komputasi</p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="lda-klasifikasi-berita">
+<h1>LDA Klasifikasi Berita<a class="headerlink" href="#lda-klasifikasi-berita" title="Link to this heading">#</a></h1>
+<p><strong>Tujuan</strong>: Klasifikasi berita berdasarkan kategori menggunakan fitur topik LDA.</p>
+<p><strong>Alur</strong>: Setup → Preprocessing → LDA → Klasifikasi SVM → Visualisasi UMAP</p>
+<p><strong>Dataset</strong>: <code class="docutils literal notranslate"><span class="pre">hasil_preprocessing_berita.csv</span></code> (isi, hasil_preprocessing, kategori)</p>
+<section id="setup">
+<h2>SETUP<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<p>Import library: pandas, gensim (LDA), sklearn (klasifikasi), matplotlib, umap (visualisasi)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## FASE 1: SETUP DAN PEMUATAN DATA</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## SETUP</span>
 
 <span class="c1"># Import library dasar</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
-<span class="c1"># Import untuk Preprocessing</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">ast</span><span class="w"> </span><span class="kn">import</span> <span class="n">literal_eval</span> <span class="c1"># Untuk mengubah string &#39;[...]&#39; menjadi list</span>
 
 <span class="c1"># Import untuk LDA &amp; Koherensi</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gensim</span>
@@ -468,12 +439,26 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.lines</span><span class="w"> </span><span class="kn">import</span> <span class="n">Line2D</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">umap.umap_</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">umap</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Semua library berhasil diimpor.&quot;</span><span class="p">)</span>
-
-<span class="c1"># --- Memuat Dataset ---</span>
-<span class="c1"># Kini membaca file hasil preprocessing yang berisi kolom: isi, hasil_preprocessing, kategori</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Semua library berhasil diimpor.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pemuatan-data">
+<h2>PEMUATAN DATA<a class="headerlink" href="#pemuatan-data" title="Link to this heading">#</a></h2>
+<p>Baca dataset CSV yang sudah dipreprocessing. Kolom: isi, hasil_preprocessing, kategori</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Memuat Dataset </span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;hasil_preprocessing_berita.csv&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dataset berhasil dimuat. Jumlah data: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> baris.&quot;</span><span class="p">)</span>
@@ -487,9 +472,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Semua library berhasil diimpor.
-
-Dataset berhasil dimuat. Jumlah data: 1600 baris.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset berhasil dimuat. Jumlah data: 1600 baris.
 Contoh kolom inti:
                                                  isi  \
 0  Wakil Ketua DPRSufmi Dasco Ahmadmengungkap isi...   
@@ -509,26 +492,21 @@ Contoh kolom inti:
 </div>
 </div>
 </section>
-<section id="fase-2-preprocessing-dan-penggabungan-kategori">
-<h2>FASE 2: Preprocessing dan Penggabungan Kategori<a class="headerlink" href="#fase-2-preprocessing-dan-penggabungan-kategori" title="Link to this heading">#</a></h2>
-<p><strong>Apa yang dilakukan</strong>:</p>
-<ul class="simple">
-<li><p><strong>Penggabungan kategori</strong>: Menggabungkan subkategori regional (Jatim, Jatim Barat, dll) menjadi satu kategori “Berita Regional Jatim”</p></li>
-<li><p><strong>Konversi token</strong>: Mengubah kolom <code class="docutils literal notranslate"><span class="pre">hasil_preprocessing</span></code> menjadi format list token yang bisa diproses gensim</p></li>
-</ul>
-<p><strong>Mengapa penting</strong>:</p>
-<ul class="simple">
-<li><p>Mengurangi fragmentasi kategori (dari banyak subkategori menjadi kategori yang lebih umum)</p></li>
-<li><p>Memastikan format token kompatibel dengan gensim (list of strings)</p></li>
-<li><p>Meningkatkan kualitas klasifikasi dengan kategori yang lebih seimbang</p></li>
-</ul>
+<section id="ekstraksi-fitur-lda-pencarian-topik-optimal">
+<h2>EKSTRAKSI FITUR LDA &amp; PENCARIAN TOPIK OPTIMAL<a class="headerlink" href="#ekstraksi-fitur-lda-pencarian-topik-optimal" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Gabungkan kategori regional Jatim</p></li>
+<li><p>Konversi hasil_preprocessing ke format token</p></li>
+<li><p>Filter kamus (buang kata jarang/sering)</p></li>
+<li><p>Estimasi jumlah topik dengan HDP</p></li>
+<li><p>Cari topik optimal dengan koherensi</p></li>
+<li><p>Ekstrak fitur distribusi topik</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## FASE 2: PRA-PEMROSESAN TEKS DAN PENGGABUNGAN KATEGORI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## EKSTRAKSI FITUR LDA &amp; PENCARIAN TOPIK OPTIMAL</span>
 
 <span class="c1"># --- A. Penggabungan Kategori (Opsional, tapi Sangat Direkomendasikan) ---</span>
-<span class="c1"># Berdasarkan analisis kita, banyak kategori regional yang tumpang tindih.</span>
-<span class="c1"># Menggabungkannya akan sangat membantu model.</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Memulai Penggabungan Kategori ---&quot;</span><span class="p">)</span>
 <span class="n">mapping_kategori</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;Jatim&#39;</span><span class="p">:</span> <span class="s1">&#39;Berita Regional Jatim&#39;</span><span class="p">,</span> <span class="s1">&#39;Jatim Barat&#39;</span><span class="p">:</span> <span class="s1">&#39;Berita Regional Jatim&#39;</span><span class="p">,</span>
@@ -539,14 +517,9 @@ Contoh kolom inti:
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">mapping_kategori</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah kategori setelah digabungkan: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-
-<span class="c1"># --- B. Pra-pemrosesan Teks ---</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Memulai Pemanfaatan Hasil Preprocessing dari CSV ---&quot;</span><span class="p">)</span>
-
-<span class="c1"># Kolom &#39;hasil_preprocessing&#39; diharapkan berisi token yang sudah diproses.</span>
-<span class="c1"># Format yang didukung:</span>
-<span class="c1"># - String token yang dipisah spasi (&quot;kata1 kata2 kata3&quot;) -&gt; akan di-split</span>
-<span class="c1"># - Representasi list (&quot;[&#39;kata1&#39;, &#39;kata2&#39;]&quot;) -&gt; akan di-eval aman ke list</span>
+<span class="c1"># --- B. Konversi hasil_preprocessing ke format token ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Memulai Konversi Hasil Preprocessing ---&quot;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ast</span><span class="w"> </span><span class="kn">import</span> <span class="n">literal_eval</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">ensure_tokens</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -567,56 +540,13 @@ Contoh kolom inti:
 
 <span class="c1"># Buat kolom tokens langsung dari hasil_preprocessing</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hasil_preprocessing&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ensure_tokens</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pemanfaatan hasil preprocessing selesai.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Contoh hasil tokens:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;kategori&#39;</span><span class="p">,</span> <span class="s1">&#39;tokens&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Memulai Penggabungan Kategori ---
-Jumlah kategori setelah digabungkan: 8
-
---- Memulai Pemanfaatan Hasil Preprocessing dari CSV ---
-Pemanfaatan hasil preprocessing selesai.
-Contoh hasil tokens:
-   kategori                                             tokens
-0  nasional  [wakil, ketua, dprsufmi, dasco, ahmadmengungka...
-1  nasional  [jaksa, tuntut, jpu, tuntut, majelis, hakim, a...
-2  nasional  [menteri, kebudayaanfadli, zonmembeberkan, ren...
-3  nasional  [purnawirawan, tnipolri, gabung, dalamkomite, ...
-4  nasional  [aktorammar, zonikembali, libat, edar, barang,...
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="fase-3-ekstraksi-fitur-lda-dan-pencarian-topik-optimal">
-<h2>FASE 3: Ekstraksi Fitur LDA dan Pencarian Topik Optimal<a class="headerlink" href="#fase-3-ekstraksi-fitur-lda-dan-pencarian-topik-optimal" title="Link to this heading">#</a></h2>
-<p><strong>Apa yang dilakukan</strong>:</p>
-<ul class="simple">
-<li><p><strong>Filter kamus</strong>: Buang kata yang terlalu jarang (&lt;15 dokumen) atau terlalu sering (&gt;50% dokumen)</p></li>
-<li><p><strong>Estimasi HDP</strong>: Gunakan Hierarchical Dirichlet Process untuk perkiraan awal jumlah topik</p></li>
-<li><p><strong>Grid search koherensi</strong>: Coba berbagai jumlah topik dan pilih yang memiliki koherensi tertinggi</p></li>
-<li><p><strong>Ekstraksi fitur</strong>: Konversi setiap dokumen menjadi vektor distribusi probabilitas topik</p></li>
-</ul>
-<p><strong>Mengapa penting</strong>:</p>
-<ul class="simple">
-<li><p>Filter kamus meningkatkan kualitas topik dengan menghilangkan noise</p></li>
-<li><p>HDP memberikan estimasi awal yang lebih akurat daripada menebak jumlah topik</p></li>
-<li><p>Koherensi mengukur seberapa “masuk akal” topik yang dihasilkan</p></li>
-<li><p>Fitur distribusi topik menjadi input untuk klasifikasi (bukan teks mentah)</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## FASE 3: EKSTRAKSI FITUR LDA &amp; PENCARIAN TOPIK OPTIMAL</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Konversi hasil preprocessing selesai.&quot;</span><span class="p">)</span>
 
 <span class="c1"># Siapkan data untuk Gensim</span>
 <span class="n">documents</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">dictionary</span> <span class="o">=</span> <span class="n">Dictionary</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
 
-<span class="c1"># --- A. Filter Kamus (Sesuai Referensi &amp; Praktik Terbaik) ---</span>
+<span class="c1"># Filter Kamus </span>
 <span class="c1"># Membuang kata yang terlalu jarang atau terlalu sering muncul.</span>
 <span class="c1"># Ini meningkatkan kualitas topik secara signifikan.</span>
 <span class="n">dictionary</span><span class="o">.</span><span class="n">filter_extremes</span><span class="p">(</span><span class="n">no_below</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">no_above</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -624,14 +554,14 @@ Contoh hasil tokens:
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Kamus dibuat dan difilter. Jumlah kata unik: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-<span class="c1"># --- B. Estimasi Jumlah Topik dengan HDP (Langkah Cerdas) ---</span>
+<span class="c1"># Estimasi Jumlah Topik dengan HDP </span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Menjalankan HDP untuk estimasi jumlah topik... ---&quot;</span><span class="p">)</span>
 <span class="n">hdp_model</span> <span class="o">=</span> <span class="n">HdpModel</span><span class="p">(</span><span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">)</span>
 <span class="n">estimated_num_topics</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hdp_model</span><span class="o">.</span><span class="n">print_topics</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ HDP mengestimasi ada sekitar: </span><span class="si">{</span><span class="n">estimated_num_topics</span><span class="si">}</span><span class="s2"> topik.&quot;</span><span class="p">)</span>
 
 
-<span class="c1"># --- C. Mencari Jumlah Topik Terbaik dengan Plot Koherensi ---</span>
+<span class="c1"># Mencari Jumlah Topik Terbaik dengan Plot Koherensi </span>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_coherence_values_multicore</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">corpus</span><span class="p">,</span> <span class="n">texts</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">coherence_values</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -639,16 +569,17 @@ Contoh hasil tokens:
         <span class="n">model</span> <span class="o">=</span> <span class="n">LdaMulticore</span><span class="p">(</span><span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">num_topics</span><span class="o">=</span><span class="n">num_topics</span><span class="p">,</span>
                              <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">passes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">coherencemodel</span> <span class="o">=</span> <span class="n">CoherenceModel</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">texts</span><span class="o">=</span><span class="n">texts</span><span class="p">,</span> <span class="n">dictionary</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">coherence</span><span class="o">=</span><span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
-        <span class="n">coherence_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coherencemodel</span><span class="o">.</span><span class="n">get_coherence</span><span class="p">())</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Selesai menghitung untuk </span><span class="si">{</span><span class="n">num_topics</span><span class="si">}</span><span class="s2"> topik...&quot;</span><span class="p">)</span>
+        <span class="n">current_coherence</span> <span class="o">=</span> <span class="n">coherencemodel</span><span class="o">.</span><span class="n">get_coherence</span><span class="p">()</span>
+        <span class="n">coherence_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_coherence</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Selesai menghitung untuk </span><span class="si">{</span><span class="n">num_topics</span><span class="si">}</span><span class="s2"> topik. Skor Koherensi: </span><span class="si">{</span><span class="n">current_coherence</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total waktu pencarian koherensi: </span><span class="si">{</span><span class="n">total_time</span><span class="o">/</span><span class="mi">60</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> menit&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">coherence_values</span>
 
-<span class="c1"># Atur rentang pencarian di sekitar hasil HDP</span>
-<span class="n">search_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">estimated_num_topics</span> <span class="o">-</span> <span class="mi">15</span><span class="p">)</span>
-<span class="n">search_limit</span> <span class="o">=</span> <span class="n">estimated_num_topics</span> <span class="o">+</span> <span class="mi">20</span>
-<span class="n">search_step</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c1"># Atur rentang pencarian di sekitar hasil HDP (lebih ketat &amp; presisi)</span>
+<span class="n">search_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">estimated_num_topics</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">search_limit</span> <span class="o">=</span> <span class="n">estimated_num_topics</span> <span class="o">+</span> <span class="mi">6</span>
+<span class="n">search_step</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Menjalankan pencarian koherensi dari </span><span class="si">{</span><span class="n">search_start</span><span class="si">}</span><span class="s2"> hingga </span><span class="si">{</span><span class="n">search_limit</span><span class="si">}</span><span class="s2"> topik... ---&quot;</span><span class="p">)</span>
 <span class="n">coherence_values</span> <span class="o">=</span> <span class="n">compute_coherence_values_multicore</span><span class="p">(</span><span class="n">dictionary</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span> <span class="n">texts</span><span class="o">=</span><span class="n">documents</span><span class="p">,</span>
@@ -670,10 +601,16 @@ Contoh hasil tokens:
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Jumlah topik optimal yang ditemukan: </span><span class="si">{</span><span class="n">optimal_num_topics</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-<span class="c1"># --- D. Latih Model LDA Final &amp; Ekstrak Fitur ---</span>
+<span class="c1"># Latih Model LDA Final &amp; Ekstrak Fitur ---</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Melatih model LDA final dengan topik optimal... ---&quot;</span><span class="p">)</span>
 <span class="n">lda_model</span> <span class="o">=</span> <span class="n">LdaMulticore</span><span class="p">(</span><span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">num_topics</span><span class="o">=</span><span class="n">optimal_num_topics</span><span class="p">,</span>
                          <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">passes</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Topik-topik yang Ditemukan oleh Model LDA ---&quot;</span><span class="p">)</span>
+    <span class="c1"># Tampilkan 15 kata teratas untuk setiap topik</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">lda_model</span><span class="o">.</span><span class="n">print_topics</span><span class="p">(</span><span class="n">num_words</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Topik: </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kata-kata: </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># Ekstrak fitur (distribusi topik) untuk setiap dokumen</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_lda_features</span><span class="p">(</span><span class="n">lda_model</span><span class="p">,</span> <span class="n">bow_corpus</span><span class="p">):</span>
@@ -695,60 +632,114 @@ Contoh hasil tokens:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kamus dibuat dan difilter. Jumlah kata unik: 2249
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Memulai Penggabungan Kategori ---
+Jumlah kategori setelah digabungkan: 8
+
+--- Memulai Konversi Hasil Preprocessing ---
+Konversi hasil preprocessing selesai.
+
+Kamus dibuat dan difilter. Jumlah kata unik: 2249
 
 --- Menjalankan HDP untuk estimasi jumlah topik... ---
 ✅ HDP mengestimasi ada sekitar: 20 topik.
 
---- Menjalankan pencarian koherensi dari 5 hingga 40 topik... ---
-Selesai menghitung untuk 5 topik...
-Selesai menghitung untuk 10 topik...
-Selesai menghitung untuk 15 topik...
-Selesai menghitung untuk 20 topik...
-Selesai menghitung untuk 25 topik...
-Selesai menghitung untuk 30 topik...
-Selesai menghitung untuk 35 topik...
+--- Menjalankan pencarian koherensi dari 15 hingga 26 topik... ---
+Selesai menghitung untuk 15 topik. Skor Koherensi: 0.5497
+Selesai menghitung untuk 16 topik. Skor Koherensi: 0.5597
+Selesai menghitung untuk 17 topik. Skor Koherensi: 0.5695
+Selesai menghitung untuk 18 topik. Skor Koherensi: 0.5446
+Selesai menghitung untuk 19 topik. Skor Koherensi: 0.5190
+Selesai menghitung untuk 20 topik. Skor Koherensi: 0.5139
+Selesai menghitung untuk 21 topik. Skor Koherensi: 0.5201
+Selesai menghitung untuk 22 topik. Skor Koherensi: 0.4949
+Selesai menghitung untuk 23 topik. Skor Koherensi: 0.5313
+Selesai menghitung untuk 24 topik. Skor Koherensi: 0.5035
+Selesai menghitung untuk 25 topik. Skor Koherensi: 0.5360
 
-Total waktu pencarian koherensi: 4.65 menit
+Total waktu pencarian koherensi: 7.98 menit
 </pre></div>
 </div>
-<img alt="_images/553d866e466ffbab333e8b762706836d9a7a36f81a2133b73d389df00df7a531.png" src="_images/553d866e466ffbab333e8b762706836d9a7a36f81a2133b73d389df00df7a531.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Jumlah topik optimal yang ditemukan: 5
+<img alt="_images/af39cc5d9bdc01c8b7dedbbbf0ade8ffa750b1ca06de9848721db74c67262857.png" src="_images/af39cc5d9bdc01c8b7dedbbbf0ade8ffa750b1ca06de9848721db74c67262857.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Jumlah topik optimal yang ditemukan: 17
 
 --- Melatih model LDA final dengan topik optimal... ---
+
+--- Topik-topik yang Ditemukan oleh Model LDA ---
+Topik: 0
+Kata-kata: 0.023*&quot;makan&quot; + 0.017*&quot;sehat&quot; + 0.013*&quot;konsumsi&quot; + 0.013*&quot;tubuh&quot; + 0.012*&quot;kandung&quot; + 0.011*&quot;minum&quot; + 0.011*&quot;tingkat&quot; + 0.011*&quot;air&quot; + 0.010*&quot;bantu&quot; + 0.010*&quot;orang&quot; + 0.009*&quot;lemak&quot; + 0.009*&quot;darah&quot; + 0.009*&quot;sakit&quot; + 0.008*&quot;gula&quot; + 0.008*&quot;risiko&quot;
+
+Topik: 1
+Kata-kata: 0.025*&quot;film&quot; + 0.012*&quot;cinta&quot; + 0.012*&quot;the&quot; + 0.011*&quot;tayang&quot; + 0.011*&quot;tampil&quot; + 0.009*&quot;hidup&quot; + 0.009*&quot;dunia&quot; + 0.009*&quot;tulis&quot; + 0.008*&quot;balap&quot; + 0.008*&quot;tonton&quot; + 0.008*&quot;bintang&quot; + 0.008*&quot;of&quot; + 0.007*&quot;cnn&quot; + 0.007*&quot;cerita&quot; + 0.007*&quot;indonesia&quot;
+
+Topik: 2
+Kata-kata: 0.033*&quot;malaysia&quot; + 0.030*&quot;hukum&quot; + 0.025*&quot;main&quot; + 0.025*&quot;fifa&quot; + 0.021*&quot;dokumen&quot; + 0.020*&quot;fam&quot; + 0.018*&quot;putus&quot; + 0.018*&quot;palsu&quot; + 0.014*&quot;tujuh&quot; + 0.013*&quot;hakim&quot; + 0.012*&quot;naturalisasi&quot; + 0.012*&quot;penjara&quot; + 0.011*&quot;kait&quot; + 0.011*&quot;banding&quot; + 0.010*&quot;adil&quot;
+
+Topik: 3
+Kata-kata: 0.035*&quot;rp&quot; + 0.020*&quot;harga&quot; + 0.012*&quot;mbg&quot; + 0.011*&quot;anak&quot; + 0.011*&quot;ribu&quot; + 0.009*&quot;juta&quot; + 0.009*&quot;bayar&quot; + 0.009*&quot;emas&quot; + 0.008*&quot;gram&quot; + 0.008*&quot;gizi&quot; + 0.008*&quot;sehat&quot; + 0.008*&quot;urban&quot; + 0.007*&quot;program&quot; + 0.007*&quot;panjang&quot; + 0.007*&quot;terbang&quot;
+
+Topik: 4
+Kata-kata: 0.032*&quot;israel&quot; + 0.024*&quot;trump&quot; + 0.017*&quot;gaza&quot; + 0.016*&quot;palestina&quot; + 0.014*&quot;as&quot; + 0.013*&quot;hamas&quot; + 0.011*&quot;perintah&quot; + 0.011*&quot;serang&quot; + 0.010*&quot;presiden&quot; + 0.010*&quot;amerika&quot; + 0.010*&quot;senjata&quot; + 0.010*&quot;negara&quot; + 0.008*&quot;bebas&quot; + 0.008*&quot;warga&quot; + 0.008*&quot;sepakat&quot;
+
+Topik: 5
+Kata-kata: 0.049*&quot;indonesia&quot; + 0.040*&quot;arab&quot; + 0.039*&quot;saudi&quot; + 0.025*&quot;main&quot; + 0.024*&quot;dunia&quot; + 0.024*&quot;timnas&quot; + 0.024*&quot;piala&quot; + 0.019*&quot;laga&quot; + 0.013*&quot;tanding&quot; + 0.013*&quot;kualifikasi&quot; + 0.012*&quot;lawan&quot; + 0.012*&quot;babak&quot; + 0.011*&quot;tim&quot; + 0.011*&quot;irak&quot; + 0.010*&quot;menit&quot;
+
+Topik: 6
+Kata-kata: 0.015*&quot;nikita&quot; + 0.015*&quot;pasal&quot; + 0.011*&quot;jaksa&quot; + 0.011*&quot;tindak&quot; + 0.010*&quot;ayat&quot; + 0.009*&quot;polri&quot; + 0.009*&quot;hukum&quot; + 0.009*&quot;pidana&quot; + 0.009*&quot;lakilaki&quot; + 0.009*&quot;uang&quot; + 0.008*&quot;duga&quot; + 0.008*&quot;uu&quot; + 0.008*&quot;ancam&quot; + 0.008*&quot;sidang&quot; + 0.008*&quot;polisi&quot;
+
+Topik: 7
+Kata-kata: 0.028*&quot;bangun&quot; + 0.025*&quot;pesantren&quot; + 0.023*&quot;korban&quot; + 0.023*&quot;gedung&quot; + 0.018*&quot;al&quot; + 0.015*&quot;pondok&quot; + 0.015*&quot;khoziny&quot; + 0.015*&quot;ambruk&quot; + 0.014*&quot;proses&quot; + 0.010*&quot;menteri&quot; + 0.009*&quot;sidoarjo&quot; + 0.009*&quot;ponpes&quot; + 0.009*&quot;orang&quot; + 0.009*&quot;santri&quot; + 0.008*&quot;perintah&quot;
+
+Topik: 8
+Kata-kata: 0.035*&quot;sekolah&quot; + 0.024*&quot;gempa&quot; + 0.017*&quot;pajak&quot; + 0.013*&quot;garuda&quot; + 0.012*&quot;masyarakat&quot; + 0.010*&quot;bangun&quot; + 0.009*&quot;indonesia&quot; + 0.009*&quot;serta&quot; + 0.009*&quot;daerah&quot; + 0.008*&quot;kendara&quot; + 0.008*&quot;program&quot; + 0.008*&quot;ancam&quot; + 0.007*&quot;selatan&quot; + 0.007*&quot;jawa&quot; + 0.007*&quot;kompetisi&quot;
+
+Topik: 9
+Kata-kata: 0.025*&quot;indonesia&quot; + 0.016*&quot;usaha&quot; + 0.013*&quot;kerja&quot; + 0.011*&quot;industri&quot; + 0.011*&quot;energi&quot; + 0.009*&quot;ekonomi&quot; + 0.009*&quot;produksi&quot; + 0.009*&quot;listrik&quot; + 0.009*&quot;perintah&quot; + 0.008*&quot;pasar&quot; + 0.008*&quot;tingkat&quot; + 0.007*&quot;persen&quot; + 0.007*&quot;kembang&quot; + 0.007*&quot;nasional&quot; + 0.007*&quot;china&quot;
+
+Topik: 10
+Kata-kata: 0.044*&quot;persen&quot; + 0.029*&quot;unit&quot; + 0.015*&quot;indonesia&quot; + 0.013*&quot;musim&quot; + 0.012*&quot;turun&quot; + 0.012*&quot;kuat&quot; + 0.011*&quot;capai&quot; + 0.011*&quot;hujan&quot; + 0.011*&quot;pasar&quot; + 0.011*&quot;jual&quot; + 0.010*&quot;posisi&quot; + 0.010*&quot;rp&quot; + 0.010*&quot;saham&quot; + 0.010*&quot;prediksi&quot; + 0.009*&quot;tani&quot;
+
+Topik: 11
+Kata-kata: 0.027*&quot;kendara&quot; + 0.020*&quot;mobil&quot; + 0.015*&quot;jalan&quot; + 0.015*&quot;motor&quot; + 0.013*&quot;rp&quot; + 0.011*&quot;harga&quot; + 0.011*&quot;indonesia&quot; + 0.009*&quot;diskon&quot; + 0.009*&quot;juta&quot; + 0.009*&quot;guna&quot; + 0.008*&quot;sirene&quot; + 0.008*&quot;masyarakat&quot; + 0.008*&quot;hadir&quot; + 0.007*&quot;konsumen&quot; + 0.006*&quot;model&quot;
+
+Topik: 12
+Kata-kata: 0.015*&quot;wilayah&quot; + 0.014*&quot;hujan&quot; + 0.008*&quot;warga&quot; + 0.008*&quot;rumah&quot; + 0.008*&quot;barat&quot; + 0.007*&quot;lokasi&quot; + 0.007*&quot;potensi&quot; + 0.007*&quot;masyarakat&quot; + 0.007*&quot;laut&quot; + 0.006*&quot;hasil&quot; + 0.006*&quot;angin&quot; + 0.006*&quot;bmkg&quot; + 0.006*&quot;gunung&quot; + 0.006*&quot;malam&quot; + 0.006*&quot;temu&quot;
+
+Topik: 13
+Kata-kata: 0.028*&quot;menteri&quot; + 0.013*&quot;presiden&quot; + 0.012*&quot;wakil&quot; + 0.012*&quot;jabat&quot; + 0.012*&quot;gugat&quot; + 0.010*&quot;prabowo&quot; + 0.009*&quot;temu&quot; + 0.008*&quot;jalan&quot; + 0.008*&quot;negara&quot; + 0.008*&quot;haji&quot; + 0.008*&quot;cerai&quot; + 0.008*&quot;ketua&quot; + 0.007*&quot;jakarta&quot; + 0.007*&quot;perintah&quot; + 0.007*&quot;rumah&quot;
+
+Topik: 14
+Kata-kata: 0.022*&quot;perintah&quot; + 0.019*&quot;persen&quot; + 0.019*&quot;purbaya&quot; + 0.019*&quot;jakarta&quot; + 0.018*&quot;rp&quot; + 0.018*&quot;bank&quot; + 0.016*&quot;uang&quot; + 0.015*&quot;triliun&quot; + 0.015*&quot;anggar&quot; + 0.015*&quot;menteri&quot; + 0.014*&quot;daerah&quot; + 0.014*&quot;bbm&quot; + 0.012*&quot;dana&quot; + 0.010*&quot;indonesia&quot; + 0.010*&quot;etanol&quot;
+
+Topik: 15
+Kata-kata: 0.019*&quot;guna&quot; + 0.013*&quot;aplikasi&quot; + 0.011*&quot;ponsel&quot; + 0.011*&quot;tiktok&quot; + 0.011*&quot;ai&quot; + 0.011*&quot;iphone&quot; + 0.011*&quot;data&quot; + 0.010*&quot;digital&quot; + 0.010*&quot;sistem&quot; + 0.009*&quot;pro&quot; + 0.009*&quot;akun&quot; + 0.009*&quot;fitur&quot; + 0.009*&quot;milik&quot; + 0.008*&quot;perangkat&quot; + 0.007*&quot;juta&quot;
+
+Topik: 16
+Kata-kata: 0.036*&quot;israel&quot; + 0.034*&quot;kapal&quot; + 0.024*&quot;gsf&quot; + 0.021*&quot;album&quot; + 0.020*&quot;aktivis&quot; + 0.019*&quot;gaza&quot; + 0.017*&quot;swift&quot; + 0.015*&quot;layar&quot; + 0.013*&quot;bantu&quot; + 0.012*&quot;sumud&quot; + 0.012*&quot;manusia&quot; + 0.012*&quot;global&quot; + 0.011*&quot;armada&quot; + 0.011*&quot;lagu&quot; + 0.010*&quot;flotilla&quot;
+
 Ekstraksi fitur LDA selesai.
-Bentuk matriks fitur (X): (1600, 5)
+Bentuk matriks fitur (X): (1600, 17)
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="fase-4-pelatihan-dan-evaluasi-model-klasifikasi">
-<h2>FASE 4: Pelatihan dan Evaluasi Model Klasifikasi<a class="headerlink" href="#fase-4-pelatihan-dan-evaluasi-model-klasifikasi" title="Link to this heading">#</a></h2>
-<p><strong>Apa yang dilakukan</strong>:</p>
-<ul class="simple">
-<li><p><strong>Split data</strong>: Bagi dataset menjadi 80% training dan 20% testing dengan stratifikasi</p></li>
-<li><p><strong>Training SVM</strong>: Latih model Support Vector Machine dengan kernel linear</p></li>
-<li><p><strong>Evaluasi</strong>: Hitung akurasi dan laporan klasifikasi (precision, recall, F1-score per kategori)</p></li>
-</ul>
-<p><strong>Mengapa penting</strong>:</p>
-<ul class="simple">
-<li><p>Stratifikasi memastikan proporsi kategori sama di training dan testing</p></li>
-<li><p>SVM kernel linear cocok untuk fitur high-dimensional seperti distribusi topik</p></li>
-<li><p>Evaluasi memberikan insight tentang performa model per kategori</p></li>
-<li><p>Akurasi 55% menunjukkan model bisa membedakan beberapa kategori dengan baik</p></li>
-</ul>
+<section id="pelatihan-dan-evaluasi-model-klasifikasi">
+<h2>PELATIHAN DAN EVALUASI MODEL KLASIFIKASI<a class="headerlink" href="#pelatihan-dan-evaluasi-model-klasifikasi" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Split data 80/20 dengan stratifikasi</p></li>
+<li><p>Latih SVM kernel linear</p></li>
+<li><p>Evaluasi dengan akurasi dan classification report</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## FASE 4: PELATIHAN DAN EVALUASI MODEL KLASIFIKASI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## PELATIHAN DAN EVALUASI MODEL KLASIFIKASI</span>
 
-<span class="c1"># --- A. Bagi Data menjadi Latih dan Uji ---</span>
+<span class="c1"># Bagi Data menjadi Latih dan Uji ---</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data dibagi. Jumlah data latih: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="si">}</span><span class="s2">, Jumlah data uji: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-<span class="c1"># --- B. Latih Model Klasifikasi (SVM) ---</span>
-<span class="c1"># Kita gunakan SVM sesuai hasil eksperimen dan referensi.</span>
+<span class="c1"># Latih Model Klasifikasi (SVM) </span>
 <span class="n">classifier</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Memulai pelatihan model SVM... ---&quot;</span><span class="p">)</span>
@@ -756,7 +747,7 @@ Bentuk matriks fitur (X): (1600, 5)
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pelatihan selesai.&quot;</span><span class="p">)</span>
 
 
-<span class="c1"># --- C. Evaluasi Kinerja Model ---</span>
+<span class="c1"># Evaluasi Kinerja Model</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
 <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
@@ -774,50 +765,42 @@ Bentuk matriks fitur (X): (1600, 5)
 Pelatihan selesai.
 
 --- HASIL EVALUASI AKHIR ---
-Akurasi Model: 55.00%
+Akurasi Model: 71.88%
 
 Laporan Klasifikasi (Classification Report):
                precision    recall  f1-score   support
 
-      ekonomi       0.32      0.15      0.20        40
-   gaya-hidup       0.71      0.60      0.65        40
-      hiburan       0.50      0.20      0.29        40
-internasional       0.72      0.72      0.72        40
-     nasional       0.49      0.90      0.63        40
-     olahraga       0.97      0.93      0.95        40
-     otomotif       0.33      0.65      0.43        40
-    teknologi       0.53      0.25      0.34        40
+      ekonomi       0.62      0.72      0.67        40
+   gaya-hidup       0.83      0.62      0.71        40
+      hiburan       0.67      0.70      0.68        40
+internasional       0.91      0.72      0.81        40
+     nasional       0.61      0.70      0.65        40
+     olahraga       0.90      0.88      0.89        40
+     otomotif       0.74      0.65      0.69        40
+    teknologi       0.61      0.75      0.67        40
 
-     accuracy                           0.55       320
-    macro avg       0.57      0.55      0.53       320
- weighted avg       0.57      0.55      0.53       320
+     accuracy                           0.72       320
+    macro avg       0.74      0.72      0.72       320
+ weighted avg       0.74      0.72      0.72       320
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="fase-5-visualisasi-dengan-umap">
-<h2>FASE 5: Visualisasi dengan UMAP<a class="headerlink" href="#fase-5-visualisasi-dengan-umap" title="Link to this heading">#</a></h2>
-<p><strong>Apa yang dilakukan</strong>:</p>
-<ul class="simple">
-<li><p><strong>UMAP</strong>: Turunkan dimensi fitur topik dari 5D ke 2D untuk visualisasi</p></li>
-<li><p><strong>Scatter plot</strong>: Tampilkan sebaran data training dan testing dalam 2D</p></li>
-<li><p><strong>Color coding</strong>: Setiap kategori diberi warna berbeda untuk melihat pemisahan</p></li>
-</ul>
-<p><strong>Mengapa penting</strong>:</p>
-<ul class="simple">
-<li><p>UMAP mempertahankan struktur lokal data sehingga klaster kategori terlihat jelas</p></li>
-<li><p>Visualisasi membantu memahami seberapa baik fitur topik memisahkan kategori</p></li>
-<li><p>Perbandingan train vs test menunjukkan konsistensi model</p></li>
-<li><p>Jika kategori membentuk klaster terpisah, berarti fitur topik efektif untuk klasifikasi</p></li>
-</ul>
+<section id="analisis-lanjutan-dan-visualisasi-umap">
+<h2>ANALISIS LANJUTAN DAN VISUALISASI (UMAP)<a class="headerlink" href="#analisis-lanjutan-dan-visualisasi-umap" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Turunkan dimensi fitur ke 2D dengan UMAP</p></li>
+<li><p>Visualisasi scatter plot train vs test</p></li>
+<li><p>Color coding per kategori untuk melihat pemisahan</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## FASE 5: ANALISIS LANJUTAN DAN VISUALISASI (UMAP)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## ANALISIS LANJUTAN DAN VISUALISASI (UMAP)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Membuat visualisasi UMAP untuk perbandingan Train vs Test... ---&quot;</span><span class="p">)</span>
 
-<span class="c1"># --- A. Siapkan Data untuk Visualisasi ---</span>
+<span class="c1"># Siapkan Data untuk Visualisasi </span>
 <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="n">label_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">label</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">)}</span>
 <span class="n">y_train_numeric</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">label_map</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
@@ -831,27 +814,29 @@ internasional       0.72      0.72      0.72        40
 <span class="n">x2d_train</span> <span class="o">=</span> <span class="n">X_2d_combined</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)]</span>
 <span class="n">x2d_test</span> <span class="o">=</span> <span class="n">X_2d_combined</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">):]</span>
 
-<span class="c1"># --- B. Fungsi untuk Menggambar Plot ---</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_topic_clusters</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x2d</span><span class="p">,</span> <span class="n">y_numeric</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">colors</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;Spectral&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x2d</span><span class="p">[</span><span class="n">y_numeric</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x2d</span><span class="p">[</span><span class="n">y_numeric</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-                   <span class="n">label</span><span class="o">=</span><span class="n">label_name</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ax</span>
-
-<span class="c1"># --- C. Buat dan Tampilkan Dua Subplot ---</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plot_topic_clusters</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x2d_train</span><span class="p">,</span> <span class="n">y_train_numeric</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="s2">&quot;Train Set&quot;</span><span class="p">)</span>
-<span class="n">plot_topic_clusters</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x2d_test</span><span class="p">,</span> <span class="n">y_test_numeric</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="s2">&quot;Test Set&quot;</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;Spectral&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Train Set&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x2d_train</span><span class="p">[</span><span class="n">y_train_numeric</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x2d_train</span><span class="p">[</span><span class="n">y_train_numeric</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+                    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Test Set&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x2d_test</span><span class="p">[</span><span class="n">y_test_numeric</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x2d_test</span><span class="p">[</span><span class="n">y_test_numeric</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+                    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Visualisasi UMAP untuk Perbandingan Train vs Test Set&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="c1"># Tambahkan legenda di luar plot</span>
-<span class="n">handles</span><span class="p">,</span> <span class="n">current_labels</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
-<span class="c1"># Gunakan `num` untuk memastikan semua handle dibuat jika kategori banyak</span>
-<span class="n">handles</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Kategori&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.12</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="c1"># Buat handle legenda secara manual</span>
+<span class="n">legend_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+                            <span class="n">markerfacecolor</span><span class="o">=</span><span class="n">colors</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)),</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_handles</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Kategori&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.12</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -866,13 +851,11 @@ internasional       0.72      0.72      0.72        40
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\umap\umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
   warn(
-C:\Users\User\AppData\Local\Temp\ipykernel_8892\4126789932.py:22: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+C:\Users\User\AppData\Local\Temp\ipykernel_13828\1922531978.py:20: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
   colors = cm.get_cmap(&quot;Spectral&quot;, len(labels))
-c:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\matplotlib\collections.py:1112: UserWarning: Collection without array used. Make sure to specify the values to be colormapped via the `c` argument.
-  warnings.warn(&quot;Collection without array used. Make sure to &quot;
 </pre></div>
 </div>
-<img alt="_images/b189d2e2b52e6570ff1e2121b96132ad700868bbb01ad452aba88558e57eb01e.png" src="_images/b189d2e2b52e6570ff1e2121b96132ad700868bbb01ad452aba88558e57eb01e.png" />
+<img alt="_images/2c83d1eb7c409e36cf7c263b88cfd438c429111684e2d9e6806b6440f05f4b44.png" src="_images/2c83d1eb7c409e36cf7c263b88cfd438c429111684e2d9e6806b6440f05f4b44.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Selesai ---
 </pre></div>
 </div>
@@ -936,11 +919,11 @@ c:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\matplotl
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-1-setup-dan-pemuatan-data">FASE 1: Setup dan Pemuatan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-2-preprocessing-dan-penggabungan-kategori">FASE 2: Preprocessing dan Penggabungan Kategori</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-3-ekstraksi-fitur-lda-dan-pencarian-topik-optimal">FASE 3: Ekstraksi Fitur LDA dan Pencarian Topik Optimal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-4-pelatihan-dan-evaluasi-model-klasifikasi">FASE 4: Pelatihan dan Evaluasi Model Klasifikasi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fase-5-visualisasi-dengan-umap">FASE 5: Visualisasi dengan UMAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">SETUP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemuatan-data">PEMUATAN DATA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-lda-pencarian-topik-optimal">EKSTRAKSI FITUR LDA &amp; PENCARIAN TOPIK OPTIMAL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pelatihan-dan-evaluasi-model-klasifikasi">PELATIHAN DAN EVALUASI MODEL KLASIFIKASI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-lanjutan-dan-visualisasi-umap">ANALISIS LANJUTAN DAN VISUALISASI (UMAP)</a></li>
 </ul>
   </nav></div>
 
