@@ -51,3 +51,5 @@ chapters:
 - file: word_graph_UAS
   title: Word Graph UAS
   
+- file: link_deploy
+  title: Link Deploy WordExtraction UAS
