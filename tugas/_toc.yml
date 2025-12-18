@@ -11,6 +11,7 @@ chapters:
   - file: crawlingberita
   - file: crawlingptatrunojoyo
   - file: ptatrunojoyomanajemen
+  - file: crawling_twiter
 - file: preprocessing_abstrak_indonesia
   title: Preprocessing Abstrak Indonesia
 
@@ -34,3 +35,19 @@ chapters:
 
 - file: uts
   title: UTS PPW
+
+- file: pta_graph_analysis
+  title: PTA Graph Analysis
+
+- file: analisis_dataset_nasa
+  title: Analisis Dataset Nasa
+
+- file: facebook_community
+  title: Graph Favebook Community
+
+- file: word_graph_pdf
+  title: Word Graph PDF
+
+- file: word_graph_UAS
+  title: Word Graph UAS
+  
